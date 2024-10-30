@@ -62,7 +62,6 @@ model Song {
   name          String
   albumId       String?
   pathSong      String
-  pathCover     String?
   releaseDate   DateTime       @default(now())
   country       String
   duration      String
