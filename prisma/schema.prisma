@@ -18,12 +18,12 @@ model User {
   name          String
   email         String         @unique
   password      String
-  slug          String
+  slug          String         @unique
   cpf           String?        @unique
   status        Boolean
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  phoneNumber   String?
+  phoneNumber   String?        @unique
   likes         String
   follows       String
   downloads     String
@@ -93,7 +93,7 @@ model Playlist {
   isPublic      Boolean        @default(true)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  user          User           @relation("UserPlaylists", fields: [userId], references: [id])
+  user          User?          @relation("UserPlaylists", fields: [userId], references: [id])
   songs         PlaylistSong[]
   playlistLikes PlaylistLike[]
 }
@@ -111,9 +111,9 @@ model PlaylistSong {
 model PlaylistLike {
   userId     String
   playlistId String
-  likedAt    DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
-  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  likedAt    DateTime  @default(now())
+  user       User?     @relation(fields: [userId], references: [id])
+  playlist   Playlist? @relation(fields: [playlistId], references: [id])
 
   @@id([userId, playlistId])
 }
