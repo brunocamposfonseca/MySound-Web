@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const newUser = await prisma.user.create({
       data,
     });
-    return NextResponse.json(newUser);
+    return NextResponse.json({newUser}, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao criar usuário.' }, { status: 500 });
   }
@@ -15,8 +15,26 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany();
-    return NextResponse.json(users);
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        email: true,
+        password: true,
+        cpf: true,
+        createdAt: true,
+        updatedAt: true,
+        downloads: true,
+        follows: true,
+        likes: true,
+        phoneNumber: true,
+        playlistLikes: true,
+        playlists: true,
+        status: true,
+      }
+    });
+    return NextResponse.json({users}, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao buscar usuários.' }, { status: 500 });
   }
@@ -29,7 +47,7 @@ export async function PATCH(request: Request) {
       where: { id },
       data,
     });
-    return NextResponse.json(updatedUser);
+    return NextResponse.json({updatedUser}, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao atualizar usuário.' }, { status: 500 });
   }
@@ -41,7 +59,7 @@ export async function DELETE(request: Request) {
     await prisma.user.delete({
       where: { id },
     });
-    return NextResponse.json({ message: 'Usuário deletado com sucesso.' });
+    return NextResponse.json({ message: 'Usuário deletado com sucesso.' }, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao deletar usuário.' }, { status: 500 });
   }

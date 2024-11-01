@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (!user) {
       return NextResponse.json({ error: 'Usuário não encontrado.' }, { status: 404 });
     }
-    return NextResponse.json(user);
+    return NextResponse.json({user}, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao buscar usuário.' }, { status: 500 });
   }
@@ -24,7 +24,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       where: { id },
       data,
     });
-    return NextResponse.json(updatedUser);
+    return NextResponse.json({updatedUser}, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao atualizar usuário.' }, { status: 500 });
   }
@@ -36,7 +36,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     await prisma.user.delete({
       where: { id },
     });
-    return NextResponse.json({ message: 'Usuário deletado com sucesso.' });
+    return NextResponse.json({ message: 'Usuário deletado com sucesso.' }, {status: 200});
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao deletar usuário.' }, { status: 500 });
   }
