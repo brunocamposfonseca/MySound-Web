@@ -18,7 +18,7 @@ export default function InfoMusicPlayer() {
         <Image
           src={currentTrack.cover}
           alt="Capa"
-          className="rounded-sm cursor-pointer hover:saturate-100"
+          className="rounded-sm cursor-pointer hover:brightness-75 transition-all"
           width={55}
           height={55}
         />

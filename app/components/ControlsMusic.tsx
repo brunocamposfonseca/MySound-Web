@@ -42,7 +42,7 @@ export default function ControlsMusic() {
                 </button>
             </Tooltipx>
 
-            <div className="flex gap-2 items-center justify-center w-2/5">
+            <div className="flex gap-2 items-center justify-center w-2/6">
                 <Tooltipx tooltip={volume === 0 ? "Unmute" : "Mute"}>
                     <button
                         className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl"
