@@ -34,7 +34,7 @@ export default function RootLayout({
         >
           <PlayerProvider>
             <div className="h-full relative">
-              <section className="grid grid-areas-layout grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-full min-h-full p-2 relative w-full">
+              <section className="grid grid-areas-layout grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-full min-h-full relative w-full">
                 <Navbar />
                 <Sidebar />
                 <Player />

@@ -28,22 +28,22 @@ export default function Footer() {
                         <h3 className="font-medium mb-2">Documents</h3>
                         <ul className="flex flex-col gap-1">
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Policy and Privacy</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Policy and Privacy</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Terms of Use</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Terms of Use</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">User Agreement</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">User Agreement</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">User Defense</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">User Defense</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Copyright</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Copyright</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">API</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">API</Link>
                             </li>
                         </ul>
                     </div>
@@ -51,16 +51,16 @@ export default function Footer() {
                         <h3 className="font-medium mb-2">Help</h3>
                         <ul className="flex flex-col gap-1">
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Report</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Report</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Platform issues</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Platform issues</Link>
+                            </li>
+                            <li> 
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">User Account</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">User Account</Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Songs</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Songs</Link>
                             </li>
                         </ul>
                     </div>
@@ -68,22 +68,22 @@ export default function Footer() {
                         <h3 className="font-medium mb-2">Satus Inc</h3>
                         <ul className="flex flex-col gap-1">
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">About</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">About</Link>
                             </li>
                             <li>
-                                <Link href="https://mysoundapp.website" target="_blank" rel="noopener noreferrer" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">MySound</Link>
+                                <Link href="https://mysoundapp.website" target="_blank" rel="noopener noreferrer" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">MySound</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Drilling</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Drilling</Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white">Projects</Link>
+                                <Link href="#" className="transition-all text-zinc-400 italic hover:underline hover:text-black dark:hover:text-white text-sm">Projects</Link>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="w-full text-end border-t pt-6 mt-6">
-                    <p className="text-sm text-zinc-400 select-none">
+                    <p className="text-xs text-zinc-400 select-none">
                         &copy; {new Date().getUTCFullYear()} - Todos os direitos reservados por <Link className="italic hover:underline" href="#">MySound. Inc</Link>
                     </p>
                 </div>
