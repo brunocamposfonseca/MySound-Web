@@ -83,11 +83,14 @@ const config: Config = {
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
 		gridTemplateAreas: {
-		layout: [
-			'sidebar navbar navbar',
-			'sidebar main queue',
-			'player player player',
-		],
+			layout: [
+				'sidebar navbar navbar',
+				'sidebar main queue',
+				'player player player',
+			],
+			infoPlayer: [
+				'title','subtitle'
+			]
 		},
   	}
   },

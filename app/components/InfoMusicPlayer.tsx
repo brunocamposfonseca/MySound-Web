@@ -13,26 +13,26 @@ export default function InfoMusicPlayer() {
   if (!currentTrack) return null;
 
   return (
-    <section className="flex flex-row gap-4 items-center p-4">
+    <section className="flex flex-row gap-4 items-center p-2">
       <div className="flex items-center gap-4">
         <Image
           src={currentTrack.cover}
           alt="Capa"
-          className="w-16 h-16 rounded-sm cursor-pointer hover:saturate-100"
-          width={80}
-          height={80}
+          className="rounded-sm cursor-pointer hover:saturate-100"
+          width={55}
+          height={55}
         />
-        <div className="flex flex-col w-auto">
-          <Tooltipx tooltip={currentTrack.title}>
+        <div className="grid grid-areas-infoPlayer grid-cols-[auto_1fr] grid-rows-[auto_auto]">
             <Link
               href={currentTrack.id}
-              className={`flex hover:underline whitespace-nowrap max-w-64 line-clamp-2 text-ellipsis overflow-hidden text-base font-medium`}
+              className={`flex hover:underline whitespace-nowrap w-full line-clamp-2 grid-in-title text-ellipsis overflow-hidden text-sm font-medium`}
             >
-              {currentTrack.title}
+              <Tooltipx tooltip={currentTrack.title}>
+                {currentTrack.title}
+              </Tooltipx>
             </Link>
-          </Tooltipx>
           <span
-            className={`flex max-w-64 whitespace-nowrap overflow-hidden text-xs`}
+            className={`flex w-full whitespace-nowrap grid-in-subtitle overflow-hidden text-xs`}
           >
             {Object.entries(currentTrack.artist).map(([id, name], index, array) => (
               <span key={id} className="text-xs text-zinc-600 dark:text-zinc-400 dark:hover:text-white hover:text-black">

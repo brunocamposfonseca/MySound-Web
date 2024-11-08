@@ -25,7 +25,7 @@ export default function ControlsMusic() {
     };
 
     return (
-        <section className="flex gap-6 items-center">
+        <section className="flex w-full gap-4 items-center justify-end">
             <Tooltipx tooltip="Syncronize">
                 <button className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl">
                     <LuMonitorSmartphone />
@@ -42,7 +42,7 @@ export default function ControlsMusic() {
                 </button>
             </Tooltipx>
 
-            <div className="flex gap-2 items-center justify-center min-w-40">
+            <div className="flex gap-2 items-center justify-center w-2/5">
                 <Tooltipx tooltip={volume === 0 ? "Unmute" : "Mute"}>
                     <button
                         className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl"

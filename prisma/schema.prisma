@@ -20,20 +20,37 @@ model User {
   password      String
   slug          String         @unique
   cpf           String?        @unique
+  genre         Boolean
+  country       String
   status        Boolean
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   phoneNumber   String?        @unique
-  likes         String
-  follows       String
+  likes         Likes[]
+  follows       Follows[]
   downloads     String
   playlists     Playlist[]     @relation("UserPlaylists")
   playlistLikes PlaylistLike[]
+
+  @@map("user")
 }
 
 model Artist {
-  id     String        @id @default(cuid())
-  albums ArtistAlbum[]
+  id      String        @id @default(cuid())
+  follows Follows[]
+  albums  ArtistAlbum[]
+
+  @@map("artist")
+}
+
+model Follows {
+  userId   String
+  artistId String
+  user     User   @relation(fields: [userId], references: [id])
+  artist   Artist @relation(fields: [artistId], references: [id])
+
+  @@id([userId, artistId])
+  @@map("follows")
 }
 
 model Album {
@@ -45,6 +62,8 @@ model Album {
   tracks      Int
   songs       Song[]
   artists     ArtistAlbum[]
+
+  @@map("album")
 }
 
 model ArtistAlbum {
@@ -54,6 +73,7 @@ model ArtistAlbum {
   album    Album  @relation(fields: [albumId], references: [id])
 
   @@id([artistId, albumId])
+  @@map("artistalbum")
 }
 
 model Song {
@@ -68,13 +88,28 @@ model Song {
   features      String
   album         Album?         @relation(fields: [albumId], references: [id])
   genres        SongGenre[]
+  likes         Likes[]
   playlistSongs PlaylistSong[]
+
+  @@map("song")
+}
+
+model Likes {
+  userId String
+  songId String
+  user   User   @relation(fields: [userId], references: [id])
+  song   Song   @relation(fields: [songId], references: [id])
+
+  @@id([userId, songId])
+  @@map("likes")
 }
 
 model Genre {
   id         String      @id @default(cuid())
   name       String      @unique
   songGenres SongGenre[]
+
+  @@map("genre")
 }
 
 model SongGenre {
