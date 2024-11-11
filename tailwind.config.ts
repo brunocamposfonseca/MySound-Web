@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		backgroundImage: {
+  			'expand-radial': 'radial-gradient(circle, rgba(26,0,28,0.8) 0%, rgba(0,0,0,0.8) 100%)'
+  		},
 		fontFamily: {
 			rubik: ['var(--font-rubik)'],
 			inter: ['var(--font-inter)'],

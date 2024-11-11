@@ -32,9 +32,6 @@ export function DropUser() {
           <DropdownMenuItem>
             Settings
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Help</DropdownMenuItem>

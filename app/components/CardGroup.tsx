@@ -16,7 +16,7 @@ export default function CardGroup() {
   return (
     <Carousel className="w-full max-w-8xl flex flex-col gap-4">
       <div className="flex gap-2 w-full justify-between items-center">
-        <Link href="" className="text-xl font-bold">As Melhores do Dia</Link>
+        <Link href="" className="text-xl font-bold hover:underline">The Best of the Day</Link>
         <div className="flex gap-2">
           <CarouselPrevious />
           <CarouselNext />

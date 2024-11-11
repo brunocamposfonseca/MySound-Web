@@ -5,6 +5,9 @@ import { PiQueueBold } from "react-icons/pi";
 import Tooltipx from "./Tooltipx";
 import { Slider } from "@/components/ui/slider";
 import { usePlayer } from "@/context/PlayerContext";
+import { TbMicrophone2 } from "react-icons/tb";
+import { RiExpandDiagonalLine } from "react-icons/ri";
+import { useExpand } from '@/context/ExpandContext';
 
 export default function ControlsMusic() {
     const {
@@ -24,8 +27,15 @@ export default function ControlsMusic() {
         }
     };
 
+    const { toggleExpand } = useExpand();
+
     return (
-        <section className="flex w-full gap-4 items-center justify-end">
+        <section className="flex w-full gap-5 items-center justify-end">
+            <Tooltipx tooltip="Lyrics">
+                <button className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl">
+                    <TbMicrophone2 />
+                </button>
+            </Tooltipx>
             <Tooltipx tooltip="Syncronize">
                 <button className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl">
                     <LuMonitorSmartphone />
@@ -64,6 +74,12 @@ export default function ControlsMusic() {
                     max={100}
                 />
             </div>
+
+            <Tooltipx tooltip="Expand">
+                <button onClick={toggleExpand} className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl">
+                    <RiExpandDiagonalLine />
+                </button>
+            </Tooltipx>
         </section>
     );
 }

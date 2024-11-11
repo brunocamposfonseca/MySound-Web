@@ -1,6 +1,6 @@
 "use client";
 
-import { BiSolidChevronLeft, BiSolidChevronRight } from "react-icons/bi";
+import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import HeadingSidebar from "./HeadingSidebar";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export default function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger>
                                 <Button onClick={handleResizable} className="flex transition-all relative bg-transparent border text-lg p-0 text-black dark:text-white rounded-t-none rounded-l-none rounded-r rounded-b h-10 w-10 hover:backdrop-blur-sm hover:bg-white/30 dark:bg-black/30">
-                                    <BiSolidChevronRight />
+                                    <GoSidebarCollapse />
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent className="flex absolute left-7 top-2" align="center">Increase</TooltipContent>
@@ -36,7 +36,7 @@ export default function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger>
                                 <Button onClick={handleResizable} className="flex relative bg-transparent border text-lg p-0 text-black dark:text-white rounded-t-none rounded-l-none rounded-r rounded-b h-10 w-10 hover:backdrop-blur-sm hover:bg-white/30 dark:bg-black/30">
-                                    <BiSolidChevronLeft />
+                                    <GoSidebarExpand />
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent className="flex absolute left-7 top-2" align="center">Decrease</TooltipContent>

@@ -6,8 +6,9 @@ import ThinCardBasic from "./components/ThinCardBasic";
 export default function Home() {
   return (
     <div className="flex flex-col gap-10">
-      <MiniCard />
-      <ThinCardBasic />
+      <h1 className="text-2xl font-bold select-none">Welcome back, Bruno!</h1>
+      {/*<MiniCard />
+      <ThinCardBasic />*/}
       <CardGroup />
       <CardGroup />
       <CardGroup />
