@@ -35,9 +35,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PlayerProvider>
-          <div className="h-full relative">
-            <ExpandProvider>
-              <PopupWrapper>
+          <ExpandProvider>
+            <PopupWrapper>
+              <div className="h-full relative">
                 <div className="h-full relative z-0">
                   <section className="grid grid-areas-layout grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-full min-h-full relative w-full">
                     <Navbar />
@@ -52,9 +52,9 @@ export default function RootLayout({
                     <div className="hidden grid-in-queue relative min-h-0"></div>
                   </section>
                 </div>
+              </div>
               </PopupWrapper>
             </ExpandProvider>
-          </div>
           </PlayerProvider>
         </ThemeProvider>
       </body>

@@ -22,8 +22,9 @@ export default function Card(props: CardProps) {
                     className="rounded hover:saturate-150 transition-all hover:shadow-lg hover:skew-x-2"
                     width={220}
                     height={220}
+                    loading="lazy"
                 />
-                <Button className="play-button-card absolute bottom-4 right-4 py-7 px-3 bg-purple-700 shadow-xl hover:bg-purple-600 rounded-full text-3xl text-white transition-all hidden">
+                <Button className="play-button-card absolute bottom-4 right-4 py-7 px-3 bg-purple-700 shadow-xl hover:bg-purple-600 rounded-full text-3xl text-white transition-all opacity-0 translate-y-[20px]">
                     <BsPlayFill className="w-8 h-8 flex items-center" />
                 </Button>
             </div>

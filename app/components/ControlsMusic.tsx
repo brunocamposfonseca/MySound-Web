@@ -30,7 +30,7 @@ export default function ControlsMusic() {
     const { toggleExpand } = useExpand();
 
     return (
-        <section className="flex w-full gap-5 items-center justify-end">
+        <section className="flex w-full gap-5 items-center p-2 justify-end">
             <Tooltipx tooltip="Lyrics">
                 <button className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl">
                     <TbMicrophone2 />

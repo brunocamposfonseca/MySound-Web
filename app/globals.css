@@ -14,7 +14,8 @@ html{
 }
 
 .card-container:hover .play-button-card{
-  display: flex;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @layer base {
