@@ -22,6 +22,7 @@ export const useAudioPlayer = () => {
     }
 
     const audio = audioRef.current;
+    audio.volume = volume
     
     const handleEnded = () => {
       if (isRepeating) {

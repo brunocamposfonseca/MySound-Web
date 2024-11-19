@@ -18,8 +18,8 @@ export class CreateUserDto {
   @IsString()
   cpf?: string;
 
-  @IsBoolean()
-  genre: boolean;
+  @IsString()
+  genre: string;
 
   @IsString()
   country: string;

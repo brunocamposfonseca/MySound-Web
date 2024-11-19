@@ -20,7 +20,7 @@ model User {
   password      String
   slug          String         @unique
   cpf           String?        @unique
-  genre         Boolean
+  genre         String
   country       String
   status        Boolean        @default(false)
   createdAt     DateTime       @default(now())
