@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  slug          String         @unique
+  cpf           String?        @unique
+  genre         Boolean
+  country       String
+  status        Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  phoneNumber   String?        @unique
+  likes         Likes[]
+  follows       Follows[]
+  downloads     String?
+  playlists     Playlist[]     @relation("UserPlaylists")
+  playlistLikes PlaylistLike[]
+
+  @@map("user")
+}
+
+model Artist {
+  id      String        @id @default(cuid())
+  name    String
+  follows Follows[]
+  albums  ArtistAlbum[]
+
+  @@map("artist")
+}
+
+model Follows {
+  userId   String
+  artistId String
+  user     User   @relation(fields: [userId], references: [id])
+  artist   Artist @relation(fields: [artistId], references: [id])
+
+  @@id([userId, artistId])
+  @@map("follows")
+}
+
+model Album {
+  id          String        @id @default(cuid())
+  name        String
+  pathCover   String
+  releaseDate DateTime
+  country     String
+  songs       Song[]
+  artists     ArtistAlbum[]
+
+  @@map("album")
+}
+
+model ArtistAlbum {
+  artistId String
+  albumId  String
+  artist   Artist @relation(fields: [artistId], references: [id])
+  album    Album  @relation(fields: [albumId], references: [id])
+
+  @@id([artistId, albumId])
+  @@map("artistalbum")
+}
+
+model Song {
+  id            String         @id @default(cuid())
+  isrc          String         @unique
+  name          String
+  description   String?
+  composition   String
+  production    String?
+  source        String?
+  albumId       String?
+  pathSong      String
+  releaseDate   DateTime       @default(now())
+  country       String
+  duration      String
+  features      String
+  album         Album?         @relation(fields: [albumId], references: [id])
+  genres        SongGenre[]
+  likes         Likes[]
+  playlistSongs PlaylistSong[]
+
+  @@map("song")
+}
+
+model Likes {
+  userId String
+  songId String
+  user   User   @relation(fields: [userId], references: [id])
+  song   Song   @relation(fields: [songId], references: [id])
+
+  @@id([userId, songId])
+  @@map("likes")
+}
+
+model Genre {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  songGenres SongGenre[]
+
+  @@map("genre")
+}
+
+model SongGenre {
+  songId  String
+  genreId String
+  song    Song   @relation(fields: [songId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id])
+
+  @@id([songId, genreId])
+  @@map("songgenre")
+}
+
+model Playlist {
+  id            String         @id @default(cuid())
+  userId        String
+  name          String
+  isPublic      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  user          User?          @relation("UserPlaylists", fields: [userId], references: [id])
+  songs         PlaylistSong[]
+  playlistLikes PlaylistLike[]
+
+  @@map("playlist")
+}
+
+model PlaylistSong {
+  playlistId String
+  songId     String
+  addedAt    DateTime @default(now())
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  song       Song     @relation(fields: [songId], references: [id])
+
+  @@id([playlistId, songId])
+  @@map("playlistsong")
+}
+
+model PlaylistLike {
+  userId     String
+  playlistId String
+  likedAt    DateTime  @default(now())
+  user       User?     @relation(fields: [userId], references: [id])
+  playlist   Playlist? @relation(fields: [playlistId], references: [id])
+
+  @@id([userId, playlistId])
+  @@map("playlistlike")
+}
