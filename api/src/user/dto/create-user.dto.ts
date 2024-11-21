@@ -1,5 +1,4 @@
-// src/user/dto/create-user.dto.ts
-import { IsString, IsEmail, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsBoolean, IsDateString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -18,6 +17,10 @@ export class CreateUserDto {
   @IsString()
   cpf?: string;
 
+  @IsOptional()
+  @IsDateString()
+  birthDate?: Date;
+
   @IsString()
   genre: string;
 
@@ -31,4 +34,5 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   phoneNumber?: string;
+  
 }

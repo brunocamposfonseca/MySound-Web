@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service'; // Verifique o caminho correto para o PrismaService
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service'; 
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 
@@ -7,34 +7,34 @@ import { UpdateArtistDto } from './dto/update-artist.dto';
 export class ArtistService {
   constructor(private prisma: PrismaService) {}
 
-  // Criar usuário
   async create(createArtistDto: CreateArtistDto) {
     return this.prisma.artist.create({
       data: createArtistDto,
     });
   }
 
-  // Buscar todos os usuários
   async findAll() {
     return this.prisma.artist.findMany();
   }
 
-  // Buscar um usuário por ID
   async findOne(id: string) {
     return this.prisma.artist.findUnique({
       where: { id },
     });
   }
 
-  // Atualizar usuário
   async update(id: string, updateArtistDto: UpdateArtistDto) {
-    return this.prisma.artist.update({
-      where: { id },
-      data: updateArtistDto,
-    });
+    const artist = await this.prisma.artist.findUnique({ where: { id } });
+    try{
+      return this.prisma.artist.update({
+        where: { id },
+        data: updateArtistDto,
+      });
+    } catch (error) {
+      throw new NotFoundException(`Artist with ID ${id} not found`);
+    }
   }
 
-  // Deletar usuário
   async remove(id: string) {
     return this.prisma.artist.delete({
       where: { id },

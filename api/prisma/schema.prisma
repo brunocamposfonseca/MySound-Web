@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,56 +8,116 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String
-  email         String         @unique
-  password      String
-  slug          String         @unique
-  cpf           String?        @unique
-  genre         String
-  country       String
-  status        Boolean        @default(false)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  phoneNumber   String?        @unique
-  likes         Likes[]
-  follows       Follows[]
-  downloads     String?
-  playlists     Playlist[]     @relation("UserPlaylists")
-  playlistLikes PlaylistLike[]
+  id              String            @id @default(cuid())
+  name            String
+  email           String            @unique
+  password        String
+  slug            String            @unique
+  cpf             BigInt?           @unique
+  birthDate       DateTime
+  genre           String
+  country         String
+  status          Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+  phoneNumber     BigInt?           @unique
+  likes           Likes[]
+  follows         Follows[]         @relation("UserFollows")
+  followedBy      Follows[]         @relation("FollowedUser")
+  downloads       String?
+  playlists       Playlist[]        @relation("UserPlaylists")
+  playlistLikes   PlaylistLike[]
+  PlaybackHistory PlaybackHistory[]
 
   @@map("user")
 }
 
 model Artist {
-  id      String        @id @default(cuid())
-  name    String
-  follows Follows[]
-  albums  ArtistAlbum[]
+  id         String        @id @default(cuid())
+  name       String
+  slug       String        @unique
+  followedBy Follows[]     @relation("FollowedArtist")
+  albums     ArtistAlbum[]
 
   @@map("artist")
-}
-
-model Follows {
-  userId   String
-  artistId String
-  user     User   @relation(fields: [userId], references: [id])
-  artist   Artist @relation(fields: [artistId], references: [id])
-
-  @@id([userId, artistId])
-  @@map("follows")
 }
 
 model Album {
   id          String        @id @default(cuid())
   name        String
+  type        String
   pathCover   String
   releaseDate DateTime
   country     String
   songs       Song[]
   artists     ArtistAlbum[]
+  deletedAt   DateTime?
 
   @@map("album")
+}
+
+model Song {
+  id              String            @id @default(cuid())
+  isrc            String            @unique
+  name            String
+  description     String?
+  composition     String
+  production      String?
+  source          String?
+  albumId         String
+  pathSong        String
+  releaseDate     DateTime          @default(now())
+  country         String
+  duration        Int
+  features        String
+  album           Album?            @relation(fields: [albumId], references: [id])
+  genres          SongGenre[]
+  likes           Likes[]
+  playlistSongs   PlaylistSong[]
+  deletedAt       DateTime?
+  PlaybackHistory PlaybackHistory[]
+
+  @@map("song")
+}
+
+model Genre {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String?
+  songGenres  SongGenre[]
+
+  @@map("genre")
+}
+
+model Playlist {
+  id            String         @id @default(cuid())
+  userId        String         @unique
+  name          String
+  isPublic      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  description   String?
+  deletedAt     DateTime?
+  user          User?          @relation("UserPlaylists", fields: [userId], references: [id])
+  songs         PlaylistSong[]
+  playlistLikes PlaylistLike[]
+
+  @@map("playlist")
+}
+
+model Follows {
+  id             String   @id @default(cuid())
+  followerId     String
+  followedId     String
+  followedType   String
+  createdAt      DateTime @default(now())
+  follower       User     @relation("UserFollows", fields: [followerId], references: [id])
+  followedUser   User?    @relation("FollowedUser", fields: [followedId], references: [id])
+  followedArtist Artist?  @relation("FollowedArtist", fields: [followedId], references: [id])
+
+  @@unique([followerId, followedId, followedType])
+  @@map("follows")
 }
 
 model ArtistAlbum {
@@ -73,29 +127,8 @@ model ArtistAlbum {
   album    Album  @relation(fields: [albumId], references: [id])
 
   @@id([artistId, albumId])
+  @@unique([artistId, albumId])
   @@map("artistalbum")
-}
-
-model Song {
-  id            String         @id @default(cuid())
-  isrc          String         @unique
-  name          String
-  description   String?
-  composition   String
-  production    String?
-  source        String?
-  albumId       String?
-  pathSong      String
-  releaseDate   DateTime       @default(now())
-  country       String
-  duration      String
-  features      String
-  album         Album?         @relation(fields: [albumId], references: [id])
-  genres        SongGenre[]
-  likes         Likes[]
-  playlistSongs PlaylistSong[]
-
-  @@map("song")
 }
 
 model Likes {
@@ -105,15 +138,8 @@ model Likes {
   song   Song   @relation(fields: [songId], references: [id])
 
   @@id([userId, songId])
+  @@unique([userId, songId])
   @@map("likes")
-}
-
-model Genre {
-  id         String      @id @default(cuid())
-  name       String      @unique
-  songGenres SongGenre[]
-
-  @@map("genre")
 }
 
 model SongGenre {
@@ -123,21 +149,8 @@ model SongGenre {
   genre   Genre  @relation(fields: [genreId], references: [id])
 
   @@id([songId, genreId])
+  @@unique([songId, genreId])
   @@map("songgenre")
-}
-
-model Playlist {
-  id            String         @id @default(cuid())
-  userId        String
-  name          String
-  isPublic      Boolean        @default(true)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  user          User?          @relation("UserPlaylists", fields: [userId], references: [id])
-  songs         PlaylistSong[]
-  playlistLikes PlaylistLike[]
-
-  @@map("playlist")
 }
 
 model PlaylistSong {
@@ -148,6 +161,7 @@ model PlaylistSong {
   song       Song     @relation(fields: [songId], references: [id])
 
   @@id([playlistId, songId])
+  @@unique([playlistId, songId])
   @@map("playlistsong")
 }
 
@@ -159,5 +173,19 @@ model PlaylistLike {
   playlist   Playlist? @relation(fields: [playlistId], references: [id])
 
   @@id([userId, playlistId])
+  @@unique([userId, playlistId])
   @@map("playlistlike")
+}
+
+model PlaybackHistory {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  songId      String
+  currentTime Int
+  playedAt    DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  song        Song     @relation(fields: [songId], references: [id])
+
+  @@unique([userId, songId])
+  @@map("playback_history")
 }
