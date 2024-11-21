@@ -15,9 +15,13 @@ import { LikesModule } from './likes/likes.module';
 import { SonggenreModule } from './songgenre/songgenre.module';
 import { PlaylistsongModule } from './playlistsong/playlistsong.module';
 import { PlaylistlikeModule } from './playlistlike/playlistlike.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path'
 
 @Module({
-  imports: [UserModule, ArtistModule, SongModule, AlbumModule, GenreModule, PlaylistModule, FollowsModule, ArtistalbumModule, LikesModule, SonggenreModule, PlaylistsongModule, PlaylistlikeModule],
+  imports: [UserModule, ArtistModule, SongModule, AlbumModule, GenreModule, PlaylistModule, FollowsModule, ArtistalbumModule, LikesModule, SonggenreModule, PlaylistsongModule, PlaylistlikeModule, ServeStaticModule.forRoot({
+    rootPath: join(__dirname, '..', 'public')
+  })],
   controllers: [AppController, ServiceController],
   providers: [AppService, PrismaService],
 })

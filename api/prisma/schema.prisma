@@ -34,11 +34,12 @@ model User {
 }
 
 model Artist {
-  id         String        @id @default(cuid())
+  id         String           @id @default(cuid())
   name       String
-  slug       String        @unique
-  followedBy Follows[]     @relation("FollowedArtist")
+  slug       String           @unique
+  followedBy Follows[]        @relation("FollowedArtist")
   albums     ArtistAlbum[]
+  categories ArtistCategory[]
 
   @@map("artist")
 }
@@ -57,6 +58,17 @@ model Album {
   @@map("album")
 }
 
+model Category {
+  id          String           @id @default(cuid())
+  name        String
+  type        String
+  description String
+  country     String
+  songs       SongCategory[]
+  artists     ArtistCategory[]
+  deletedAt   DateTime?
+}
+
 model Song {
   id              String            @id @default(cuid())
   isrc            String            @unique
@@ -72,6 +84,7 @@ model Song {
   duration        Int
   features        String
   album           Album?            @relation(fields: [albumId], references: [id])
+  category        SongCategory[]
   genres          SongGenre[]
   likes           Likes[]
   playlistSongs   PlaylistSong[]
@@ -131,6 +144,17 @@ model ArtistAlbum {
   @@map("artistalbum")
 }
 
+model ArtistCategory {
+  artistId   String
+  categoryId String
+  artist     Artist   @relation(fields: [artistId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([artistId, categoryId])
+  @@unique([artistId, categoryId])
+  @@map("artistcategory")
+}
+
 model Likes {
   userId String
   songId String
@@ -151,6 +175,17 @@ model SongGenre {
   @@id([songId, genreId])
   @@unique([songId, genreId])
   @@map("songgenre")
+}
+
+model SongCategory {
+  songId     String
+  categoryId String
+  song       Song     @relation(fields: [songId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([songId, categoryId])
+  @@unique([songId, categoryId])
+  @@map("songcategory")
 }
 
 model PlaylistSong {
