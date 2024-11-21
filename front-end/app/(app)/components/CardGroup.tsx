@@ -1,4 +1,4 @@
-// @/app/components/TrackCarousel.tsx
+
 
 import * as React from "react"
 import {
@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import Card from "@/app/components/Card"
+import Card from "@/app/(app)/components/Card"
 import tracks from "@/db/tracks"
 import Link from "next/link"
 

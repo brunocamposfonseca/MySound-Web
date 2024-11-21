@@ -20,6 +20,8 @@ export const useAudioPlayer = () => {
       audioRef.current.src = tracks[currentTrackIndex].url; 
       audioRef.current.load();
     }
+	
+	document.title = currentTrack.title;
 
     const audio = audioRef.current;
     audio.volume = volume
