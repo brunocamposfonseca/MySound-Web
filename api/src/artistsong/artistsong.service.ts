@@ -4,7 +4,7 @@ import { CreateArtistSongDto } from './dto/create-artistsong.dto';
 import { UpdateArtistSongDto } from './dto/update-artistsong.dto';
 
 @Injectable()
-export class ArtistSongService {
+export class ArtistsongService {
   constructor(private prisma: PrismaService) {}
 
   async create(createArtistSongDto: CreateArtistSongDto) {

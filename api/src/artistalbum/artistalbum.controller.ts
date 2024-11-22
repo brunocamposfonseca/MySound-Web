@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch, NotFoundException } from '@nestjs/common';
-import { ArtistAlbumService } from './artistalbum.service';
+import { ArtistalbumService } from './artistalbum.service';
 import { CreateArtistAlbumDto } from './dto/create-artistalbum.dto';
 import { UpdateArtistAlbumDto } from './dto/update-artistalbum.dto';
 
 @Controller('artistalbums')
-export class ArtistAlbumController {
-  constructor(private readonly artistalbumService: ArtistAlbumService) {}
+export class ArtistalbumController {
+  constructor(private readonly artistalbumService: ArtistalbumController) {}
 
   @Post()
   create(@Body() createArtistAlbumDto: CreateArtistAlbumDto) {

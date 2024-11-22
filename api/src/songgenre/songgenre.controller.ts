@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch, NotFoundException } from '@nestjs/common';
-import { SongGenreService } from './songgenre.service';
+import { SonggenreService } from './songgenre.service';
 import { CreateSongGenreDto } from './dto/create-songgenre.dto';
 import { UpdateSongGenreDto } from './dto/update-songgenre.dto';
 
 @Controller('songgenres')
-export class SongGenreController {
-  constructor(private readonly songGenreService: SongGenreService) {}
+export class SonggenreController {
+  constructor(private readonly songGenreService: SonggenreService) {}
 
   @Post()
   create(@Body() createSongGenreDto: CreateSongGenreDto) {
