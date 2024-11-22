@@ -14,12 +14,22 @@ export class SongService {
   }
 
   async findAll() {
-    return this.prisma.song.findMany();
+    return this.prisma.song.findMany({
+      include: {
+        artist: {},
+        genres: {},
+        category: {}
+      }});
   }
 
   async findOne(id: string) {
     return this.prisma.song.findUnique({
       where: { id },
+      include: {
+        artist: {},
+        genres: {},
+        category: {}
+      }
     });
   }
 

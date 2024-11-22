@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { IsString, IsOptional, IsDateString, IsNumber } from 'class-validator';
 
 export class UpdateSongDto {
   @IsOptional()
@@ -38,8 +38,8 @@ export class UpdateSongDto {
   country: string;
 
   @IsOptional()
-  @IsString()
-  duration: string;
+  @IsNumber()
+  duration: number;
 
   @IsOptional()
   @IsString()

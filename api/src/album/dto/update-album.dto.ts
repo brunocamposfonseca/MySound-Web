@@ -1,4 +1,6 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { Optional } from '@nestjs/common';
+import { IsString, IsOptional, IsDateString, IsEnum } from 'class-validator';
+import { TypeAlbum } from './Enum';
 
 export class UpdateAlbumDto {
   @IsOptional()
@@ -16,4 +18,8 @@ export class UpdateAlbumDto {
   @IsOptional()
   @IsString()
   country: string;
+
+  @Optional()
+  @IsEnum(TypeAlbum, {message: 'Type album must be one of: album, single or eps'})
+  type: TypeAlbum;
 }

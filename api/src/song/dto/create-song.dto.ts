@@ -1,4 +1,6 @@
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsOptional, IsDateString, IsNumber, IsArray, ValidateNested } from 'class-validator';
+import { CreateArtistDto } from 'src/artist/dto/create-artist.dto';
 
 export class CreateSongDto {
   @IsString()
@@ -31,8 +33,8 @@ export class CreateSongDto {
   @IsString()
   country: string;
 
-  @IsString()
-  duration: string;
+  @IsNumber()
+  duration: number;
 
   @IsString()
   features: string;

@@ -17,11 +17,16 @@ import { PlaylistsongModule } from './playlistsong/playlistsong.module';
 import { PlaylistlikeModule } from './playlistlike/playlistlike.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path'
+import { CategoryModule } from './category/category.module';
+import { BlockedartistModule } from './blockedartist/blockedartist.module';
+import { ArtistsongModule } from './artistsong/artistsong.module';
+import { ArtistcategoryModule } from './artistcategory/artistcategory.module';
+import { SongcategoryModule } from './songcategory/songcategory.module';
 
 @Module({
   imports: [UserModule, ArtistModule, SongModule, AlbumModule, GenreModule, PlaylistModule, FollowsModule, ArtistalbumModule, LikesModule, SonggenreModule, PlaylistsongModule, PlaylistlikeModule, ServeStaticModule.forRoot({
     rootPath: join(__dirname, '..', 'public')
-  })],
+  }), CategoryModule, BlockedartistModule, ArtistsongModule, ArtistcategoryModule, SongcategoryModule],
   controllers: [AppController, ServiceController],
   providers: [AppService, PrismaService],
 })

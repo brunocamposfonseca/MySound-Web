@@ -1,4 +1,5 @@
-import { IsString, IsDateString } from 'class-validator';
+import { IsString, IsDateString, IsEnum } from 'class-validator';
+import { TypeAlbum } from './Enum';
 
 export class CreateAlbumDto {
   @IsString()
@@ -13,4 +14,7 @@ export class CreateAlbumDto {
 
   @IsString()
   country: string;
+
+  @IsEnum(TypeAlbum, {message: 'Type album must be one of: album, single or eps'})
+  type: TypeAlbum;
 }

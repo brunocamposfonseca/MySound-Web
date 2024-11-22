@@ -13,17 +13,77 @@ export class UserService {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const userData = { ...createUserDto, password: hashedPassword };
     return this.prisma.user.create({
-      data: createUserDto,
+      data: userData,
     });
   }
 
   async findAll() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        likes: {
+          select: {
+            songId: true,
+            AddedAt: true
+          }
+        },
+        blockedArtists: {
+          select: {
+            artistId: true,
+            blockedAt: true
+          }
+        },
+        follows: {},
+        followedBy: {},
+        PlaybackHistory: {
+          select: {
+            songId: true,
+            playedAt: true,
+            currentTime: true,
+          }
+        },
+        playlistLikes: {
+          select: {
+            likedAt: true,
+            playlistId: true
+          }
+        },
+        playlists: {}
+      }});
   }
 
   async findOne(id: string) {
     return this.prisma.user.findUnique({
       where: { id },
+      include: {
+        likes: {
+          select: {
+            songId: true,
+            AddedAt: true
+          }
+        },
+        blockedArtists: {
+          select: {
+            artistId: true,
+            blockedAt: true
+          }
+        },
+        follows: {},
+        followedBy: {},
+        PlaybackHistory: {
+          select: {
+            songId: true,
+            playedAt: true,
+            currentTime: true,
+          }
+        },
+        playlistLikes: {
+          select: {
+            likedAt: true,
+            playlistId: true
+          }
+        },
+        playlists: {}
+      }
     });
   }
 

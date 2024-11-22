@@ -20,10 +20,11 @@ export const useAudioPlayer = () => {
       audioRef.current.src = tracks[currentTrackIndex].url; 
       audioRef.current.load();
     }
-	
-	document.title = currentTrack.title;
 
+    const artists = Object.values(tracks[currentTrackIndex].artist).join(", ");
+    const track = tracks[currentTrackIndex].title + " \u2022 " + artists
     const audio = audioRef.current;
+    document.title = track 
     audio.volume = volume
     
     const handleEnded = () => {

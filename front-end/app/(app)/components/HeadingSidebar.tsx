@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Logo from "../../public/images/full-1-white.png"
+import Logo from "@/public/images/full-1-white.png"
 
 interface HeadingSidebarProps{
     resizable: boolean

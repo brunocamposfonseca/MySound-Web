@@ -1,4 +1,5 @@
-import { IsString, IsEmail, IsOptional, IsBoolean, IsDateString } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsBoolean, IsDateString, IsNumber, IsEnum } from 'class-validator';
+import { Gender } from './Enum';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -23,11 +24,11 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsDateString()
-  birthDate?: Date;
+  birthDate: Date;
 
   @IsOptional()
-  @IsString()
-  genre?: string;
+  @IsEnum(Gender, {message: 'Gender must be one of: male, female, other, prefer_not_to_say'})
+  gender: Gender;
 
   @IsOptional()
   @IsString()
