@@ -4,7 +4,7 @@ import { CreateArtistCategoryDto } from './dto/create-artistcategory.dto';
 import { UpdateArtistCategoryDto } from './dto/update-artistcategory.dto';
 
 @Injectable()
-export class ArtistCategoryService {
+export class ArtistcategoryService {
   constructor(private prisma: PrismaService) {}
 
   async create(createArtistCategoryDto: CreateArtistCategoryDto) {

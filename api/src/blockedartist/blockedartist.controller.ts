@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, Delete, Patch, NotFoundException } from '@nestjs/common';
-import { BlockedService } from './blockedartist.service';
+import { BlockedartistService } from './blockedartist.service';
 import { CreateBlockedDto } from './dto/create-blocked.dto';
 
 @Controller('blockeds')
-export class BlockedController {
-  constructor(private readonly blockedService: BlockedService) {}
+export class BlockedartistController {
+  constructor(private readonly blockedService: BlockedartistService) {}
 
   @Post()
   create(@Body() createBlockedDto: CreateBlockedDto) {

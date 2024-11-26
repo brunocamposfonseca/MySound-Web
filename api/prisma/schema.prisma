@@ -15,21 +15,23 @@ model User {
   slug            String            @unique
   cpf             String?           @unique
   birthDate       DateTime
-  gender          String            
+  gender          String
   country         String
   status          Boolean           @default(false)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   deletedAt       DateTime?
   phoneNumber     String?           @unique
-  likes           Likes[]        
+  likes           Likes[]
   follows         Follows[]         @relation("UserFollows")
   followedBy      Follows[]         @relation("FollowedUser")
   downloads       String?
   playlists       Playlist[]        @relation("UserPlaylists")
-  playlistLikes   PlaylistLike[]    
-  PlaybackHistory PlaybackHistory[] 
-  blockedArtists  BlockedArtist[]  
+  playlistLikes   PlaylistLike[]
+  PlaybackHistory PlaybackHistory[]
+  blockedUsers    BlockedUser[]     @relation("BlockedByUser")
+  blockedBy       BlockedUser[]     @relation("BlockedBy")
+  blockedArtists  BlockedArtist[]
 
   @@map("user")
 }
@@ -39,10 +41,11 @@ model Artist {
   name       String
   slug       String           @unique
   followedBy Follows[]        @relation("FollowedArtist")
-  albums     ArtistAlbum[]    
-  songs      ArtistSong[]     
-  categories ArtistCategory[] 
+  albums     ArtistAlbum[]
+  songs      ArtistSong[]
+  categories ArtistCategory[]
   blockedBy  BlockedArtist[]
+
   @@map("artist")
 }
 
@@ -124,15 +127,26 @@ model Playlist {
 }
 
 model BlockedArtist {
-  id String @id @default(cuid())
-  userId           String
-  artistId         String
-  blockedAt        DateTime @default(now())
-  user     User    @relation(fields: [userId], references: [id])
-  artist   Artist  @relation(fields: [artistId], references: [id])
+  id        String   @id @default(cuid())
+  userId    String
+  artistId  String
+  blockedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  artist    Artist   @relation(fields: [artistId], references: [id])
 
   @@unique([userId, artistId])
   @@map("blockedartist")
+}
+
+model BlockedUser {
+  id        String @id @default(cuid())
+  blockerId String
+  blockedId String
+  blocker   User   @relation("BlockedByUser", fields: [blockerId], references: [id])
+  blocked   User   @relation("BlockedBy", fields: [blockedId], references: [id])
+
+  @@unique([blockerId, blockedId])
+  @@map("blockeduser")
 }
 
 model Follows {
@@ -165,14 +179,14 @@ model ArtistSong {
   artistId String
   songId   String
   artist   Artist @relation(fields: [artistId], references: [id])
-  song     Song  @relation(fields: [songId], references: [id])
+  song     Song   @relation(fields: [songId], references: [id])
 
   @@unique([artistId, songId])
   @@map("artistsong")
 }
 
 model ArtistCategory {
-  id         String @id @default(cuid())
+  id         String   @id @default(cuid())
   artistId   String
   categoryId String
   artist     Artist   @relation(fields: [artistId], references: [id])
@@ -183,12 +197,12 @@ model ArtistCategory {
 }
 
 model Likes {
-  id            String @id @default(cuid())
-  userId        String
-  songId        String
-  AddedAt       DateTime @default(now())
-  user   User   @relation(fields: [userId], references: [id])
-  song   Song   @relation(fields: [songId], references: [id])
+  id      String   @id @default(cuid())
+  userId  String
+  songId  String
+  AddedAt DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  song    Song     @relation(fields: [songId], references: [id])
 
   @@unique([userId, songId])
   @@map("likes")
@@ -206,7 +220,7 @@ model SongGenre {
 }
 
 model SongCategory {
-  id         String @id @default(cuid())
+  id         String   @id @default(cuid())
   songId     String
   categoryId String
   song       Song     @relation(fields: [songId], references: [id])
@@ -217,7 +231,7 @@ model SongCategory {
 }
 
 model PlaylistSong {
-  id         String @id @default(cuid())
+  id         String   @id @default(cuid())
   playlistId String
   songId     String
   addedAt    DateTime @default(now())
@@ -229,7 +243,7 @@ model PlaylistSong {
 }
 
 model PlaylistLike {
-  id         String @id @default(cuid())
+  id         String    @id @default(cuid())
   userId     String
   playlistId String
   likedAt    DateTime  @default(now())
@@ -250,5 +264,5 @@ model PlaybackHistory {
   song        Song     @relation(fields: [songId], references: [id])
 
   @@unique([userId, songId])
-  @@map("playback_history")
+  @@map("playbackhistory")
 }

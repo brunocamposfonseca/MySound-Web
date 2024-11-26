@@ -21,13 +21,13 @@ import { CategoryModule } from './category/category.module';
 import { BlockedartistModule } from './blockedartist/blockedartist.module';
 import { ArtistsongModule } from './artistsong/artistsong.module';
 import { ArtistcategoryModule } from './artistcategory/artistcategory.module';
-import { SongcategoryModule } from './songcategory/songcategory.module';
+import { PlaybackhistoryModule } from './playbackhistory/playbackhistory.module';
 import { SongcategoryModule } from './songcategory/songcategory.module';
 
 @Module({
   imports: [UserModule, ArtistModule, SongModule, AlbumModule, GenreModule, PlaylistModule, FollowsModule, ArtistalbumModule, LikesModule, SonggenreModule, PlaylistsongModule, PlaylistlikeModule, ServeStaticModule.forRoot({
     rootPath: join(__dirname, '..', 'public')
-  }), CategoryModule, BlockedartistModule, ArtistsongModule, ArtistcategoryModule, SongcategoryModule],
+  }), CategoryModule, BlockedartistModule, ArtistsongModule, ArtistcategoryModule, SongcategoryModule, PlaybackhistoryModule],
   controllers: [AppController, ServiceController],
   providers: [AppService, PrismaService],
 })

@@ -2,17 +2,17 @@ import { useRef, useState, useEffect } from "react";
 import tracks from "@/db/tracks";
 
 export const useAudioPlayer = () => { 
-  // Criando constantes
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const volumeStorage = parseFloat(localStorage.getItem("volume") || "0.5");
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRepeating, setIsRepeating] = useState(false);
   const [isShuffling, setIsShuffling] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(0);
+  const [volValue, setVolValue] = useState(volumeStorage); 
 
-  // useEffect para acompanhar e executar alterações feitas no player
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(tracks[currentTrackIndex].url);
@@ -25,16 +25,7 @@ export const useAudioPlayer = () => {
     const track = tracks[currentTrackIndex].title + " \u2022 " + artists
     const audio = audioRef.current;
     document.title = track 
-    audio.volume = volume
-    
-    const handleEnded = () => {
-      if (isRepeating) {
-        audio.currentTime = 0;
-        audio.play();
-      } else {
-        nextTrack();
-      }
-    };
+    audio.volume = volValue
 
     const handleLoadedMetadata = () => {
       if (audio) {
@@ -43,7 +34,6 @@ export const useAudioPlayer = () => {
     };
 
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.addEventListener("ended", handleEnded);
 
     const updateTime = () => {
       if (audio) {
@@ -61,7 +51,6 @@ export const useAudioPlayer = () => {
     
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("timeupdate", updateTime);
       audio.pause();
       audioRef.current = null;
@@ -70,9 +59,37 @@ export const useAudioPlayer = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volume;
+      audioRef.current.volume = volValue;
     }
+
+    const volumeTimeout = setTimeout(() => {
+      localStorage.setItem("volume", volume.toString());
+      setVolValue(volume);
+    }, 500);
+  
+    return () => clearTimeout(volumeTimeout);
   }, [volume]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if(audio){
+      const handleEnded = () => {
+        if (isRepeating) {
+          audio.currentTime = 0;
+          audio.play();
+        } else {
+          nextTrack();
+        }
+      };
+
+      audio.addEventListener("ended", handleEnded);
+
+      return () => {
+        audio.removeEventListener("ended", handleEnded);
+      }
+    }
+  })
 
   const togglePlay = () => {
     if (audioRef.current) {

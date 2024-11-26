@@ -17,15 +17,14 @@ export default function PopupWrapper({ children }: PopupWrapperProps) {
   return (
     <div className="h-full relative">
       {children}
-      {isExpanded && (
-        <div
-        className={`h-full w-full absolute z-10 top-0 bg-expand-radial/30 backdrop-blur-xl p-12 transition-opacity duration-500 ${
-          isExpanded ? 'opacity-100' : 'opacity-0'
+      <div
+        className={`h-full w-full absolute top-0 bg-zinc-900 backdrop-blur-xl p-12 transition-all duration-500 ${
+          isExpanded ? 'opacity-100 z-10' : 'opacity-0 -z-10'
         }`}
         >
           <div>
             <div>
-              <Image src={Logo} alt=""  height={30}width={30} />
+              <Image src={Logo} alt="" height={30} width={30} />
             </div>
           </div>
           <Tooltipx tooltip="Collapse">
@@ -37,7 +36,6 @@ export default function PopupWrapper({ children }: PopupWrapperProps) {
             </button>
           </Tooltipx>
         </div>
-      )}
     </div>
   );
 }

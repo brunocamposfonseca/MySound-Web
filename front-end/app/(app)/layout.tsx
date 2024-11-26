@@ -35,7 +35,7 @@ export default function AppLayout({
 	  <PlayerProvider>
 	  <ExpandProvider>
 		<PopupWrapper>
-		  <div className="h-full relative">
+		  <div className={`${rubik.className} h-full relative`}>
 			<div className="h-full relative z-0">
 			  <section className="grid grid-areas-layout grid-cols-[auto_1fr] grid-rows-[auto_1fr_auto] h-full min-h-full relative w-full">
 				<Navbar />

@@ -8,7 +8,7 @@ export default function ControlsPlayer() {
     return (
         <div className="flex justify-center items-center gap-4">
             <Tooltipx tooltip="Shuffle">
-                <button onClick={toggleShuffle} className={`text-sm ${isShuffling ? 'dark:text-purple-400 text-purple-600' : 'text-zinc-400 dark:text-zinc-500 hover:text-black hover:dark:text-white transition-all'} h-full flex align-center`}>
+                <button onClick={toggleShuffle} className={`text-lg ${isShuffling ? 'dark:text-purple-400 text-purple-600' : 'text-zinc-400 dark:text-zinc-500 hover:text-black hover:dark:text-white transition-all'} h-full flex align-center`}>
                     <BsShuffle />
                 </button>
             </Tooltipx>
@@ -40,7 +40,7 @@ export default function ControlsPlayer() {
             </Tooltipx>
 
             <Tooltipx tooltip="Repeat">
-                <button onClick={toggleRepeat} className={`text-sm ${isRepeating ? 'text-purple-600 dark:text-purple-400' : 'text-zinc-400 dark:text-zinc-500 hover:text-black hover:dark:text-white transition-all'} h-full flex align-center `}>
+                <button onClick={toggleRepeat} className={`text-lg ${isRepeating ? 'text-purple-600 dark:text-purple-400' : 'text-zinc-400 dark:text-zinc-500 hover:text-black hover:dark:text-white transition-all'} h-full flex align-center `}>
                     <BsRepeat />
                 </button>
             </Tooltipx>
