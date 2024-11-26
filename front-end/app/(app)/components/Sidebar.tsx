@@ -2,20 +2,38 @@
 
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import HeadingSidebar from "./HeadingSidebar";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import GroupLinksSidebar from "./GroupLinksSidebar";
 
+
 export default function Sidebar() {
-    const [resizable, setResizable] = useState(false);
+    const resizableStorage = useMemo(() => {
+        if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+          return localStorage.getItem("resizable") === "true";
+        }
+        return true;
+      }, []);
+      
+      const [resizable, setResizable] = useState(resizableStorage);
+      
+      useEffect(() => {
+        const resizableTimeout = setTimeout(() => {
+          if (typeof localStorage !== "undefined") {
+            localStorage.setItem("resizable", String(resizable));
+          }
+        }, 500);
+      
+        return () => clearTimeout(resizableTimeout);
+      }, [resizable]);
 
     function handleResizable() {
         setResizable(!resizable);
     }
 
     return (
-        <aside className={`${resizable ? "w-24" : "w-64"} flex grid-in-sidebar min-h-0 h-full flex-col px-8 py-6 transition-all border-r relative bg-zinc-50 dark:bg-zinc-950`}>
+        <aside className={`${!resizable ? "w-64" : "w-24"} flex grid-in-sidebar min-h-0 h-full flex-col px-8 py-6 transition-all border-r relative bg-zinc-50 dark:bg-zinc-950`}>
             {resizable ? (
                 <div className="flex absolute -right-10 top-12 z-10">
                     <TooltipProvider>

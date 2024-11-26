@@ -18,7 +18,7 @@ export default function PopupWrapper({ children }: PopupWrapperProps) {
     <div className="h-full relative">
       {children}
       <div
-        className={`h-full w-full absolute top-0 bg-zinc-900 backdrop-blur-xl p-12 transition-all duration-500 ${
+        className={`h-full w-full absolute top-0 bg-zinc-300/30 dark:bg-zinc-900/30 backdrop-blur-xl p-12 transition-all duration-500 ${
           isExpanded ? 'opacity-100 z-10' : 'opacity-0 -z-10'
         }`}
         >

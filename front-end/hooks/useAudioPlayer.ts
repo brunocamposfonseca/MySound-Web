@@ -1,16 +1,21 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import tracks from "@/db/tracks";
 
 export const useAudioPlayer = () => { 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const volumeStorage = parseFloat(localStorage.getItem("volume") || "0.5");
+  const volumeStorage = useMemo(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      return parseFloat(localStorage.getItem("volume") || "0.5");
+    }
+    return 0;
+  }, []);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRepeating, setIsRepeating] = useState(false);
   const [isShuffling, setIsShuffling] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0);
+  const [volume, setVolume] = useState(volumeStorage);
   const [volValue, setVolValue] = useState(volumeStorage); 
 
   useEffect(() => {
