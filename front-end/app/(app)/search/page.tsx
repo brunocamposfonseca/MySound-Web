@@ -5,8 +5,7 @@ import SearchInput from "../components/SearchInput";
 export default function Search() {
     return(
         <div className="gap-8">
-            <SearchInput />
-            //<GroupCardGenre />
+            {/* <GroupCardGenre /> */}
         </div>
     )
 }

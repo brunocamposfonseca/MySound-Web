@@ -1,36 +1,50 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import tracks from "@/db/tracks";
 
-export const useAudioPlayer = () => { 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+export const useAudioPlayer = () => {
+  const repeatStorage = useMemo(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      return localStorage.getItem("repeat") === "false";
+    }
+    return true;
+  }, []);
+
+  const shuffleStorage = useMemo(() => {
+    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+      return localStorage.getItem("shuffle") === "false";
+    }
+    return true;
+  }, []);
+
   const volumeStorage = useMemo(() => {
     if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
       return parseFloat(localStorage.getItem("volume") || "0.5");
     }
     return 0;
   }, []);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isRepeating, setIsRepeating] = useState(false);
-  const [isShuffling, setIsShuffling] = useState(false);
+  const [isRepeating, setIsRepeating] = useState(repeatStorage);
+  const [isShuffling, setIsShuffling] = useState(shuffleStorage);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(volumeStorage);
-  const [volValue, setVolValue] = useState(volumeStorage); 
 
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(tracks[currentTrackIndex].url);
     } else {
-      audioRef.current.src = tracks[currentTrackIndex].url; 
+      audioRef.current.src = tracks[currentTrackIndex].url;
       audioRef.current.load();
     }
 
     const artists = Object.values(tracks[currentTrackIndex].artist).join(", ");
     const track = tracks[currentTrackIndex].title + " \u2022 " + artists
     const audio = audioRef.current;
-    document.title = track 
-    audio.volume = volValue
+    document.title = track;
+    audio.volume = volume;
 
     const handleLoadedMetadata = () => {
       if (audio) {
@@ -53,7 +67,7 @@ export const useAudioPlayer = () => {
     } else {
       audio.pause();
     }
-    
+
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", updateTime);
@@ -64,21 +78,21 @@ export const useAudioPlayer = () => {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = volValue;
+      const audio = audioRef.current;
+      audio.volume = volume;
     }
 
     const volumeTimeout = setTimeout(() => {
       localStorage.setItem("volume", volume.toString());
-      setVolValue(volume);
-    }, 500);
-  
+    }, 200);
+
     return () => clearTimeout(volumeTimeout);
   }, [volume]);
 
   useEffect(() => {
     const audio = audioRef.current;
 
-    if(audio){
+    if (audio) {
       const handleEnded = () => {
         if (isRepeating) {
           audio.currentTime = 0;
@@ -101,7 +115,7 @@ export const useAudioPlayer = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play(); 
+        audioRef.current.play();
       }
       setIsPlaying((prev) => !prev);
     }
@@ -132,11 +146,25 @@ export const useAudioPlayer = () => {
   };
 
   const toggleRepeat = () => {
+    const repeatTimeout = setTimeout(() => {
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("repeat", String(isRepeating));
+      }
+    }, 500);
+  
     setIsRepeating((prev) => !prev);
+    return () => clearTimeout(repeatTimeout);
   };
 
   const toggleShuffle = () => {
+    const shuffleTimeout = setTimeout(() => {
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("shuffle", String(isShuffling));
+      }
+    }, 500);
+  
     setIsShuffling((prev) => !prev);
+    return () => clearTimeout(shuffleTimeout);
   };
 
   return {

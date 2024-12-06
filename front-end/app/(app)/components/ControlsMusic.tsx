@@ -52,10 +52,10 @@ export default function ControlsMusic() {
                 </button>
             </Tooltipx>
 
-            <div className="flex gap-2 items-center justify-center w-2/6">
+            <div className="flex containerVol gap-2 relative items-center justify-center">
                 <Tooltipx tooltip={volume === 0 ? "Unmute" : "Mute"}>
                     <button
-                        className="flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-xl"
+                        className=" flex items-center hover:bg-transparent text-black dark:text-white hover:text-zinc-600 dark:hover:text-zinc-400 p-0 text-2xl"
                         onClick={handleVolume}
                     >
                         {volume === 0 ? (
@@ -67,12 +67,15 @@ export default function ControlsMusic() {
                         )}
                     </button>
                 </Tooltipx>
-                <Slider
-                    className="w-full"
-                    value={[volume * 100]}
-                    onValueChange={(value) => handleVolumeChange(value[0])}
-                    max={100}
-                />
+                <div className="containerSliderVol w-48 absolute -right-12 bottom-8 bg-white dark:bg-black border-2 p-3 shadow-lg z-10 rounded-sm">
+                    <Slider
+                        className="w-full"
+                        value={[volume * 100]}
+                        onValueChange={(value) => handleVolumeChange(value[0])}
+                        max={100}
+                    />
+                </div>
+                
             </div>
 
             <Tooltipx tooltip="Expand">
